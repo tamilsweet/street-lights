@@ -1,0 +1,13 @@
+#logo {
+  background-image: url('../img/street-lights-transparent.png');
+  background-size: 45px 39px;
+  background-repeat: no-repeat;
+  margin: 5px;
+  padding: 8px;
+}
+#logo-group>span {
+  width: 400px;
+  font-size: 16px;
+  padding-left: 40px;
+  text-shadow: 1px 1px 3px #999
+}

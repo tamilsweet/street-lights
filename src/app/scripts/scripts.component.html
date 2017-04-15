@@ -1,0 +1,35 @@
+<div style="display:none;">
+  <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script>
+    if (!window.jQuery) {
+      document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');
+    }
+  </script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+  <script>
+    if (!window.jQuery.ui) {
+      document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
+    }
+  </script>
+
+		<!-- IMPORTANT: APP CONFIG -->
+		<script src="js/app.config.js"></script>
+
+		<!-- BOOTSTRAP JS -->
+		<script src="js/bootstrap/bootstrap.min.js"></script>
+
+		<!-- JARVIS WIDGETS -->
+		<script src="js/smartwidgets/jarvis.widget.min.js"></script>
+		<!-- browser msie issue fix -->
+		<script src="js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
+
+		<!-- Flot Chart Plugin: Flot Engine, Flot Resizer, Flot Tooltip -->
+		<script src="js/plugin/flot/jquery.flot.cust.min.js"></script>
+		<script src="js/plugin/flot/jquery.flot.resize.min.js"></script>
+		<script src="js/plugin/flot/jquery.flot.time.min.js"></script>
+		<script src="js/plugin/flot/jquery.flot.tooltip.min.js"></script>
+
+		<!-- MAIN APP JS FILE -->
+		<script src="js/app.min.js"></script>
+</div>

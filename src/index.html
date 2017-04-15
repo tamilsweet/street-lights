@@ -1,14 +1,525 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en-us">
+
 <head>
   <meta charset="utf-8">
-  <title>StreetLights</title>
+
+  <title>Street Lights Management Application</title>
+  <meta name="description" content="Web Application to manage street lights.">
+  <meta name="author" content="">
   <base href="/">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <!-- Bootstrap & Plugin Styles -->
+  <link rel="stylesheet" type="text/css" media="screen" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="assets/css/font-awesome.min.css">
+
+  <link rel="stylesheet" type="text/css" media="screen" href="assets/css/plugins.min.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="assets/css/core.min.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="assets/css/skins.min.css">
+
+  <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
+
+  <!-- FAVICONS -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- GOOGLE FONT -->
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
 </head>
-<body>
+
+</head>
+
+<body class="">
   <app-root>Loading...</app-root>
+  <div style="display:none;">
+    <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+      if (!window.jQuery) {
+        document.write('<script src="assets/js/libs/jquery-2.1.1.min.js"><\/script>');
+      }
+    </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script>
+      if (!window.jQuery.ui) {
+        document.write('<script src="assets/js/libs/jquery-ui-1.10.3.min.js"><\/script>');
+      }
+    </script>
+
+    <!-- IMPORTANT: APP CONFIG -->
+    <script src="assets/js/app.config.js"></script>
+
+    <!-- BOOTSTRAP JS -->
+    <script src="assets/js/bootstrap/bootstrap.min.js"></script>
+
+    <!-- EASY PIE CHARTS -->
+    <script src="assets/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
+
+    <!-- SPARKLINES -->
+    <script src="assets/js/plugin/sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- JARVIS WIDGETS -->
+    <script src="assets/js/smartwidgets/jarvis.widget.min.js"></script>
+    <!-- browser msie issue fix -->
+    <script src="assets/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
+
+    <!-- SmartChat UI : plugin -->
+    <script src="assets/js/smart-chat-ui/smart.chat.ui.min.js"></script>
+    <script src="assets/js/smart-chat-ui/smart.chat.manager.min.js"></script>
+
+    <!-- Flot Chart Plugin: Flot Engine, Flot Resizer, Flot Tooltip -->
+    <script src="assets/js/plugin/flot/jquery.flot.cust.min.js"></script>
+    <script src="assets/js/plugin/flot/jquery.flot.resize.min.js"></script>
+    <script src="assets/js/plugin/flot/jquery.flot.time.min.js"></script>
+    <script src="assets/js/plugin/flot/jquery.flot.tooltip.min.js"></script>
+
+    <!-- Vector Maps Plugin: Vectormap engine, Vectormap language -->
+    <script src="assets/js/plugin/vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="assets/js/plugin/vectormap/jquery-jvectormap-world-mill-en.js"></script>
+
+    <!-- PAGE RELATED PLUGIN(S) -->
+    <script src="assets/js/plugin/datatables/jquery.dataTables.min.js"></script>
+    <script src="assets/js/plugin/datatables/dataTables.colVis.min.js"></script>
+    <script src="assets/js/plugin/datatables/dataTables.tableTools.min.js"></script>
+    <script src="assets/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="assets/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
+
+    <!-- MAIN APP JS FILE -->
+    <script src="assets/js/app.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+
+        // DO NOT REMOVE : GLOBAL FUNCTIONS!
+        pageSetUp();
+				/*
+				* RUN PAGE GRAPHS
+				*/
+
+        /* TAB 1: UPDATING CHART */
+        // For the demo we use generated data, but normally it would be coming from the server
+
+        var data = [], totalPoints = 200, $UpdatingChartColors = $("#updating-chart").css('color');
+
+        function getRandomData() {
+          if (data.length > 0)
+            data = data.slice(1);
+
+          // do a random walk
+          while (data.length < totalPoints) {
+            var prev = data.length > 0 ? data[data.length - 1] : 50;
+            var y = prev + Math.random() * 10 - 5;
+            if (y < 0)
+              y = 0;
+            if (y > 100)
+              y = 100;
+            data.push(y);
+          }
+
+          // zip the generated y values with the x values
+          var res = [];
+          for (var i = 0; i < data.length; ++i)
+            res.push([i, data[i]])
+          return res;
+        }
+
+        // setup control widget
+        var updateInterval = 1500;
+        $("#updating-chart").val(updateInterval).change(function () {
+
+          var v = $(this).val();
+          if (v && !isNaN(+v)) {
+            updateInterval = +v;
+            $(this).val("" + updateInterval);
+          }
+
+        });
+
+        // setup plot
+        var options = {
+          yaxis: {
+            min: 0,
+            max: 100
+          },
+          xaxis: {
+            min: 0,
+            max: 100
+          },
+          colors: [$UpdatingChartColors],
+          series: {
+            lines: {
+              lineWidth: 1,
+              fill: true,
+              fillColor: {
+                colors: [{
+                  opacity: 0.4
+                }, {
+                  opacity: 0
+                }]
+              },
+              steps: false
+
+            }
+          }
+        };
+
+        var plot = $.plot($("#updating-chart"), [getRandomData()], options);
+
+        /* live switch */
+        $('input[type="checkbox"]#start_interval').click(function () {
+          if ($(this).prop('checked')) {
+            $on = true;
+            updateInterval = 1500;
+            update();
+          } else {
+            clearInterval(updateInterval);
+            $on = false;
+          }
+        });
+
+        function update() {
+          if ($on == true) {
+            plot.setData([getRandomData()]);
+            plot.draw();
+            setTimeout(update, updateInterval);
+
+          } else {
+            clearInterval(updateInterval)
+          }
+
+        }
+
+        var $on = false;
+
+        /*end updating chart*/
+
+        // TAB THREE GRAPH //
+        /* TAB 3: Revenew  */
+
+        $(function () {
+
+          var trgt = [[1354586000000, 153], [1364587000000, 658], [1374588000000, 198], [1384589000000, 663], [1394590000000, 801], [1404591000000, 1080], [1414592000000, 353], [1424593000000, 749], [1434594000000, 523], [1444595000000, 258], [1454596000000, 688], [1464597000000, 364]], prft = [[1354586000000, 53], [1364587000000, 65], [1374588000000, 98], [1384589000000, 83], [1394590000000, 980], [1404591000000, 808], [1414592000000, 720], [1424593000000, 674], [1434594000000, 23], [1444595000000, 79], [1454596000000, 88], [1464597000000, 36]], sgnups = [[1354586000000, 647], [1364587000000, 435], [1374588000000, 784], [1384589000000, 346], [1394590000000, 487], [1404591000000, 463], [1414592000000, 479], [1424593000000, 236], [1434594000000, 843], [1444595000000, 657], [1454596000000, 241], [1464597000000, 341]], toggles = $("#rev-toggles"), target = $("#flotcontainer");
+
+          var data = [{
+            label: "Target Profit",
+            data: trgt,
+            bars: {
+              show: true,
+              align: "center",
+              barWidth: 30 * 30 * 60 * 1000 * 80
+            }
+          }, {
+            label: "Actual Profit",
+            data: prft,
+            color: '#3276B1',
+            lines: {
+              show: true,
+              lineWidth: 3
+            },
+            points: {
+              show: true
+            }
+          }, {
+            label: "Actual Signups",
+            data: sgnups,
+            color: '#71843F',
+            lines: {
+              show: true,
+              lineWidth: 1
+            },
+            points: {
+              show: true
+            }
+          }]
+
+          var options = {
+            grid: {
+              hoverable: true
+            },
+            tooltip: true,
+            tooltipOpts: {
+              //content: '%x - %y',
+              //dateFormat: '%b %y',
+              defaultTheme: false
+            },
+            xaxis: {
+              mode: "time"
+            },
+            yaxes: {
+              tickFormatter: function (val, axis) {
+                return "$" + val;
+              },
+              max: 1200
+            }
+
+          };
+
+          plot2 = null;
+
+          function plotNow() {
+            var d = [];
+            toggles.find(':checkbox').each(function () {
+              if ($(this).is(':checked')) {
+                d.push(data[$(this).attr("name").substr(4, 1)]);
+              }
+            });
+            if (d.length > 0) {
+              if (plot2) {
+                plot2.setData(d);
+                plot2.draw();
+              } else {
+                plot2 = $.plot(target, d, options);
+              }
+            }
+
+          };
+
+          toggles.find(':checkbox').on('change', function () {
+            plotNow();
+          });
+          plotNow()
+
+        });
+
+				/*
+				 * VECTOR MAP
+				 */
+
+        data_array = {
+          "US": 4977,
+          "AU": 4873,
+          "IN": 3671,
+          "BR": 2476,
+          "TR": 1476,
+          "CN": 146,
+          "CA": 134,
+          "BD": 100
+        };
+
+        $('#vector-map').vectorMap({
+          map: 'world_mill_en',
+          backgroundColor: '#fff',
+          regionStyle: {
+            initial: {
+              fill: '#c4c4c4'
+            },
+            hover: {
+              "fill-opacity": 1
+            }
+          },
+          series: {
+            regions: [{
+              values: data_array,
+              scale: ['#85a8b6', '#4d7686'],
+              normalizeFunction: 'polynomial'
+            }]
+          },
+          onRegionLabelShow: function (e, el, code) {
+            if (typeof data_array[code] == 'undefined') {
+              e.preventDefault();
+            } else {
+              var countrylbl = data_array[code];
+              el.html(el.html() + ': ' + countrylbl + ' visits');
+            }
+          }
+        });
+
+				/*
+				 * FULL CALENDAR JS
+				 */
+
+        if ($("#calendar").length) {
+          var date = new Date();
+          var d = date.getDate();
+          var m = date.getMonth();
+          var y = date.getFullYear();
+
+          var calendar = $('#calendar').fullCalendar({
+
+            editable: true,
+            draggable: true,
+            selectable: false,
+            selectHelper: true,
+            unselectAuto: false,
+            disableResizing: false,
+            height: "auto",
+
+            header: {
+              left: 'title', //,today
+              center: 'prev, next, today',
+              right: 'month, agendaWeek, agenDay' //month, agendaDay,
+            },
+
+            select: function (start, end, allDay) {
+              var title = prompt('Event Title:');
+              if (title) {
+                calendar.fullCalendar('renderEvent', {
+                  title: title,
+                  start: start,
+                  end: end,
+                  allDay: allDay
+                }, true // make the event "stick"
+                );
+              }
+              calendar.fullCalendar('unselect');
+            },
+
+            events: [{
+              title: 'All Day Event',
+              start: new Date(y, m, 1),
+              description: 'long description',
+              className: ["event", "bg-color-greenLight"],
+              icon: 'fa-check'
+            }, {
+              title: 'Long Event',
+              start: new Date(y, m, d - 5),
+              end: new Date(y, m, d - 2),
+              className: ["event", "bg-color-red"],
+              icon: 'fa-lock'
+            }, {
+              id: 999,
+              title: 'Repeating Event',
+              start: new Date(y, m, d - 3, 16, 0),
+              allDay: false,
+              className: ["event", "bg-color-blue"],
+              icon: 'fa-clock-o'
+            }, {
+              id: 999,
+              title: 'Repeating Event',
+              start: new Date(y, m, d + 4, 16, 0),
+              allDay: false,
+              className: ["event", "bg-color-blue"],
+              icon: 'fa-clock-o'
+            }, {
+              title: 'Meeting',
+              start: new Date(y, m, d, 10, 30),
+              allDay: false,
+              className: ["event", "bg-color-darken"]
+            }, {
+              title: 'Lunch',
+              start: new Date(y, m, d, 12, 0),
+              end: new Date(y, m, d, 14, 0),
+              allDay: false,
+              className: ["event", "bg-color-darken"]
+            }, {
+              title: 'Birthday Party',
+              start: new Date(y, m, d + 1, 19, 0),
+              end: new Date(y, m, d + 1, 22, 30),
+              allDay: false,
+              className: ["event", "bg-color-darken"]
+            }, {
+              title: 'Smartadmin Open Day',
+              start: new Date(y, m, 28),
+              end: new Date(y, m, 29),
+              className: ["event", "bg-color-darken"]
+            }],
+
+
+            eventRender: function (event, element, icon) {
+              if (!event.description == "") {
+                element.find('.fc-title').append("<br/><span class='ultra-light'>" + event.description + "</span>");
+              }
+              if (!event.icon == "") {
+                element.find('.fc-title').append("<i class='air air-top-right fa " + event.icon + " '></i>");
+              }
+            }
+          });
+
+        };
+
+        /* hide default buttons */
+        $('.fc-toolbar .fc-right, .fc-toolbar .fc-center').hide();
+
+        // calendar prev
+        $('#calendar-buttons #btn-prev').click(function () {
+          $('.fc-prev-button').click();
+          return false;
+        });
+
+        // calendar next
+        $('#calendar-buttons #btn-next').click(function () {
+          $('.fc-next-button').click();
+          return false;
+        });
+
+        // calendar today
+        $('#calendar-buttons #btn-today').click(function () {
+          $('.fc-button-today').click();
+          return false;
+        });
+
+        // calendar month
+        $('#mt').click(function () {
+          $('#calendar').fullCalendar('changeView', 'month');
+        });
+
+        // calendar agenda week
+        $('#ag').click(function () {
+          $('#calendar').fullCalendar('changeView', 'agendaWeek');
+        });
+
+        // calendar agenda day
+        $('#td').click(function () {
+          $('#calendar').fullCalendar('changeView', 'agendaDay');
+        });
+
+        // custom css expression for a case-insensitive contains()
+        jQuery.expr[':'].Contains = function (a, i, m) {
+          return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
+        };
+
+
+        /* COLUMN FILTER  */
+        var responsiveHelper_datatable_fixed_column = undefined;
+        var breakpointDefinition = {
+          tablet: 1024,
+          phone: 480
+        };
+        var otable = $('#datatable_fixed_column').DataTable({
+          //"bFilter": false,
+          //"bInfo": false,
+          //"bLengthChange": false
+          //"bAutoWidth": false,
+          //"bPaginate": false,
+          //"bStateSave": true // saves sort state using localStorage
+          "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>" +
+          "t" +
+          "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+          "autoWidth": true,
+          "oLanguage": {
+            "sSearch": '<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>'
+          },
+          "preDrawCallback": function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_datatable_fixed_column) {
+              responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column'), breakpointDefinition);
+            }
+          },
+          "rowCallback": function (nRow) {
+            responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
+          },
+          "drawCallback": function (oSettings) {
+            responsiveHelper_datatable_fixed_column.respond();
+          }
+
+        });
+
+        // Apply the filter
+        $("#datatable_fixed_column thead th input[type=text]").on('keyup change', function () {
+
+          otable
+            .column($(this).parent().index() + ':visible')
+            .search(this.value)
+            .draw();
+
+        });
+        /* END COLUMN FILTER */
+
+
+      });
+    </script>
+  </div>
 </body>
+
 </html>
