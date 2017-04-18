@@ -1,0 +1,39 @@
+<table id="{{id}}" class="{{class}}">
+  <thead>
+    <tr>
+      <th class="hasinput" *ngFor="let column of columns">
+        <input type="text" class="form-control" placeholder="{{column.placeholder}}" />
+      </th>
+      <th class="hasinput">
+        <input type="text" class="form-control" placeholder="Filter Control" />
+      </th>
+    </tr>
+    <tr>
+      <th *ngFor="let column of columns">{{column.header}}</th>
+      <th>Control</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of dataset">
+      <td *ngFor="let column of columns">
+        <span *ngIf="column.type=='text'">
+          {{row[column.value]}}
+        </span>
+        <span *ngIf="column.type=='label'" [ngClass]="{'label-success':row[column.value] === 'ON', 'label-default': row[column.value] === 'OFF', 'label-danger': row[column.value] === 'ERROR'}"
+          class="label">
+          {{row[column.value] === 'ON' ? 'ON': row[column.value] === 'OFF' ? 'OFF' : 'ERROR'}}
+        </span>
+      </td>
+      <td>
+        <span *ngIf="row['status'] !== 'ERROR'" class="onoffswitch">
+					<input type="checkbox" [checked]="row['status'] === 'ON'" name="start_interval" class="onoffswitch-checkbox" id="st-{{row['did']}}" />
+					<label class="onoffswitch-label" for="st-{{row['did']}}">
+				    <span class="onoffswitch-inner" data-swchon-text="ON" data-swchoff-text="OFF"></span>
+            <span class="onoffswitch-switch"></span>
+            <span class="hide">{{row['status']}}</span>
+          </label>
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>

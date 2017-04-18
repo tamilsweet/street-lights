@@ -12,6 +12,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ScriptsComponent } from './scripts/scripts.component';
 import { AboutComponent } from './about/about.component';
+import { DatatableComponent } from './dashboard/datatable/datatable.component';
+import { ColumnComponent } from './dashboard/datatable/column/column.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { AboutComponent } from './about/about.component';
     SidebarComponent,
     DashboardComponent,
     ScriptsComponent,
-    AboutComponent
+    AboutComponent,
+    DatatableComponent,
+    ColumnComponent
   ],
   imports: [
     BrowserModule,

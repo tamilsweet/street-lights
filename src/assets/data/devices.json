@@ -1,0 +1,82 @@
+[
+  {
+    "did": "BLR-CTR_MGR-1",
+    "status": "ON",
+    "timestamp": "1492451201487",
+    "location": "M.G.Road",
+    "type": "LED",
+    "groupname": "BlrCenter"
+  },
+  {
+    "did": "BLR-CTR_MGR-2",
+    "status": "OFF",
+    "timestamp": "1492451202392",
+    "location": "M.G.Road",
+    "type": "LED",
+    "groupname": "BlrCenter"
+  },
+  {
+    "did": "BLR-CTR_MGR-3",
+    "status": "ON",
+    "timestamp": "1492451203485",
+    "location": "M.G.Road",
+    "type": "LED",
+    "groupname": "BlrCenter"
+  },
+  {
+    "did": "BLR-CTR_MGR-4",
+    "status": "OFF",
+    "timestamp": "1492451204110",
+    "location": "M.G.Road",
+    "type": "LED",
+    "groupname": "BlrCenter"
+  },
+  {
+    "did": "BLR-CTR_MGR-5",
+    "status": "ON",
+    "timestamp": "1492451204718",
+    "location": "M.G.Road",
+    "type": "LED",
+    "groupname": "BlrCenter"
+  },
+  {
+    "did": "BLR-CTR_MGR-6",
+    "status": "OFF",
+    "timestamp": "1492451205640",
+    "location": "M.G.Road",
+    "type": "LED",
+    "groupname": "BlrCenter"
+  },
+  {
+    "did": "BLR-CTR_MGR-7",
+    "status": "ON",
+    "timestamp": "1492451206498",
+    "location": "M.G.Road",
+    "type": "LED",
+    "groupname": "BlrCenter"
+  },
+  {
+    "did": "BLR-CTR_MGR-8",
+    "status": "OFF",
+    "timestamp": "1492451207107",
+    "location": "M.G.Road",
+    "type": "LED",
+    "groupname": "BlrCenter"
+  },
+  {
+    "did": "BLR-CTR_MGR-9",
+    "status": "ON",
+    "timestamp": "1492451207716",
+    "location": "M.G.Road",
+    "type": "LED",
+    "groupname": "BlrCenter"
+  },
+  {
+    "did": "BLR-CTR_MGR-10",
+    "status": "OFF",
+    "timestamp": "1492451208341",
+    "location": "M.G.Road",
+    "type": "LED",
+    "groupname": "BlrCenter"
+  }
+]

@@ -24,22 +24,40 @@
       <div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
         <ul id="sparks" class="">
           <li class="sparks-info">
-            <h5> Total Lights <span class="txt-color-blue">171</span></h5>
-            <div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm">
+            <h5> Total Lights
+              <span *ngIf="counts" class="txt-color-blue"><i class="fa fa-list"></i> {{counts.total}}</span>
+              <span *ngIf="!counts" class="txt-color-blue"><i class="fa fa-spinner fa-spin fa-1x fa-fw"></i></span>
+            </h5>
+            <!--<div class="sparkline txt-color-blue hidden-mobile hidden-md hidden-sm">
               1300, 1877, 2500, 2577, 2000, 2100, 3000, 2700, 3631, 2471, 2700, 3631, 2471
-            </div>
+            </div>-->
           </li>
           <li class="sparks-info">
-            <h5> Online <span class="txt-color-green"><i class="fa fa-arrow-circle-up"></i> 160</span></h5>
-            <div class="sparkline txt-color-green hidden-mobile hidden-md hidden-sm">
+            <h5> ON
+              <span *ngIf="counts" class="txt-color-green"><i class="fa fa-arrow-circle-up"></i> {{counts.on}}</span>
+              <span *ngIf="!counts" class="txt-color-blue"><i class="fa fa-spinner fa-spin fa-1x fa-fw"></i></span>
+            </h5>
+            <!--<div class="sparkline txt-color-green hidden-mobile hidden-md hidden-sm">
               110,150,300,130,400,240,220,310,220,300, 270, 210
-            </div>
+            </div>-->
           </li>
           <li class="sparks-info">
-            <h5> Offline <span class="txt-color-red"><i class="fa fa-arrow-circle-down"></i> 11</span></h5>
-            <div class="sparkline txt-color-red hidden-mobile hidden-md hidden-sm">
+            <h5> OFF
+              <span *ngIf="counts" class="txt-color-grey"><i class="fa fa-arrow-circle-down"></i> {{counts.off}}</span>
+              <span *ngIf="!counts" class="txt-color-blue"><i class="fa fa-spinner fa-spin fa-1x fa-fw"></i></span>
+            </h5>
+            <!--<div class="sparkline txt-color-red hidden-mobile hidden-md hidden-sm">
               110,150,300,130,400,240,220,310,220,300, 270, 210
-            </div>
+            </div>-->
+          </li>
+          <li class="sparks-info">
+            <h5> Offline
+              <span *ngIf="counts" class="txt-color-red"><i class="fa fa-remove"></i> {{counts.error}}</span>
+              <span *ngIf="!counts" class="txt-color-blue"><i class="fa fa-spinner fa-spin fa-1x fa-fw"></i></span>
+            </h5>
+            <!--<div class="sparkline txt-color-red hidden-mobile hidden-md hidden-sm">
+              110,150,300,130,400,240,220,310,220,300, 270, 210
+            </div>-->
           </li>
         </ul>
       </div>
@@ -69,8 +87,7 @@
 								-->
             <header>
               <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-              <h2>Column Filters </h2>
-
+              <h2>Street Light List</h2>
             </header>
 
             <!-- widget div-->
@@ -86,85 +103,13 @@
               <!-- widget content -->
               <div class="widget-body no-padding">
 
-                <table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
-
-                  <thead>
-                    <tr>
-                      <th class="hasinput" style="width:8%">
-                        <input type="text" class="form-control" placeholder="Filter Sl.No." />
-                      </th>
-                      <th class="hasinput" style="width:17%">
-                        <input type="text" class="form-control" placeholder="Filter Light ID" />
-                      </th>
-                      <th class="hasinput" style="width:16%">
-                        <input type="text" class="form-control" placeholder="Filter Location" />
-                      </th>
-                      <th class="hasinput" style="width:17%">
-                        <input type="text" class="form-control" placeholder="Filter Status" />
-                      </th>
-                      <th class="hasinput" style="width:16%">
-                        <input type="text" class="form-control" placeholder="Filter Control" />
-                      </th>
-                    </tr>
-                    <tr>
-                      <th data-hide="phone">Sl.No</th>
-                      <th data-class="expand">Light ID</th>
-                      <th>Location</th>
-                      <th data-hide="phone">Status</th>
-                      <th>Control</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>CHN-WRD54-ST10-1</td>
-                      <td>Street 1</td>
-                      <td><span class="label label-success">ONLINE</span></td>
-                      <td>
-                        <span class="onoffswitch">
-													<input type="checkbox" checked="checked" name="start_interval" class="onoffswitch-checkbox" id="st1">
-													<label class="onoffswitch-label" for="st1">
-													  <span class="onoffswitch-inner" data-swchon-text="ON" data-swchoff-text="OFF"></span>
-                            <span class="onoffswitch-switch"></span>
-                          </label>
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>CHN-WRD54-ST10-2</td>
-                      <td>Street 1</td>
-                      <td><span class="label label-success">ONLINE</span></td>
-                      <td>
-                        <span class="onoffswitch">
-													<input type="checkbox" checked="checked" name="start_interval" class="onoffswitch-checkbox" id="st2">
-													<label class="onoffswitch-label" for="st2">
-													  <span class="onoffswitch-inner" data-swchon-text="ON" data-swchoff-text="OFF"></span>
-                            <span class="onoffswitch-switch"></span>
-                          </label>
-                        </span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>CHN-WRD54-ST10-3</td>
-                      <td>Street 1</td>
-                      <td><span class="label label-default">OFFLINE</span></td>
-                      <td>
-                        <span class="onoffswitch">
-													<input type="checkbox" name="start_interval" class="onoffswitch-checkbox" id="st3">
-													<label class="onoffswitch-label" for="st3">
-													  <span class="onoffswitch-inner" data-swchon-text="ON" data-swchoff-text="OFF"></span>
-                            <span class="onoffswitch-switch"></span>
-                          </label>
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
-
-                </table>
-
+                <datatable [dataset]="devices" [id]="'datatable_fixed_column'" [class]="'table table-striped table-bordered'">
+                  <column [type]="'text'" [value]="'did'" [header]="'Light ID'" [placeholder]="'Filter Light ID'"></column>
+                  <column [type]="'text'" [value]="'location'" [header]="'Location'" [placeholder]="'Filter Location'"></column>
+                  <column [type]="'text'" [value]="'type'" [header]="'Type'" [placeholder]="'Filter Type'"></column>
+                  <column [type]="'text'" [value]="'groupname'" [header]="'Group'" [placeholder]="'Filter Group'"></column>
+                  <column [type]="'label'" [value]="'status'" [header]="'Status'" [placeholder]="'Filter Status'"></column>
+                </datatable>
               </div>
               <!-- end widget content -->
 
@@ -176,7 +121,7 @@
 
 
           <!-- new widget -->
-          <div class="jarviswidget" id="wid-id-0" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false"
+          <div class="jarviswidget hide" id="wid-id-0" data-widget-togglebutton="false" data-widget-editbutton="false" data-widget-fullscreenbutton="false"
             data-widget-colorbutton="false" data-widget-deletebutton="false">
             <!-- widget options:
 								usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
